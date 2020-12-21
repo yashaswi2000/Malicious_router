@@ -72,3 +72,14 @@ class GarnetRouter(BasicRouter):
                           "number of virtual networks")
     width = Param.UInt32(Parent.ni_flit_size,
                           "bit width supported by the router")
+
+class GarnetRouterMalicious(GarnetRouter):
+    type = 'GarnetRouterMalicious'
+    cxx_class = 'Router_Mal'
+    cxx_header = "mem/ruby/network/garnet/Router_Mal.hh"
+    vcs_per_vnet = Param.UInt32(Parent.vcs_per_vnet,
+                              "virtual channels per virtual network")
+    virt_nets = Param.UInt32(Parent.number_of_virtual_networks,
+                          "number of virtual networks")
+    width = Param.UInt32(Parent.ni_flit_size,
+                          "bit width supported by the router")

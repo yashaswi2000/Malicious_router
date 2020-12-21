@@ -29,8 +29,8 @@
  */
 
 
-#ifndef __MEM_RUBY_NETWORK_GARNET_0_ROUTER_HH__
-#define __MEM_RUBY_NETWORK_GARNET_0_ROUTER_HH__
+#ifndef __MEM_RUBY_NETWORK_GARNET_0_ROUTER_MAL_HH__
+#define __MEM_RUBY_NETWORK_GARNET_0_ROUTER_MAL_HH__
 
 #include <iostream>
 #include <memory>
@@ -42,10 +42,12 @@
 #include "mem/ruby/network/garnet/CommonTypes.hh"
 #include "mem/ruby/network/garnet/CrossbarSwitch.hh"
 #include "mem/ruby/network/garnet/GarnetNetwork.hh"
+#include "mem/ruby/network/garnet/Router.hh"
 #include "mem/ruby/network/garnet/RoutingUnit.hh"
 #include "mem/ruby/network/garnet/SwitchAllocator.hh"
 #include "mem/ruby/network/garnet/flit.hh"
 #include "params/GarnetRouter.hh"
+#include "params/GarnetRouterMalicious.hh"
 
 class NetworkLink;
 class CreditLink;
@@ -53,13 +55,13 @@ class InputUnit;
 class OutputUnit;
 class FaultModel;
 
-class Router : public BasicRouter, public Consumer
+class Router_Mal : public Router
 {
   public:
-    typedef GarnetRouterParams Params;
-    Router(const Params *p);
+    typedef GarnetRouterMaliciousParams Params;
+    Router_Mal(const Params *p);
 
-    ~Router() = default;
+    ~Router_Mal() = default;
 
     void wakeup();
     void print(std::ostream& out) const {};
@@ -154,4 +156,4 @@ class Router : public BasicRouter, public Consumer
     Stats::Scalar m_crossbar_activity;
 };
 
-#endif // __MEM_RUBY_NETWORK_GARNET_0_ROUTER_HH__
+#endif // __MEM_RUBY_NETWORK_GARNET_0_ROUTER_MAL_HH__

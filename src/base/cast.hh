@@ -30,7 +30,6 @@
 #define __BASE_CAST_HH__
 
 #include <cassert>
-
 // This is designed for situations where we have a pointer to a base
 // type, but in all cases when we cast it to a derived type, we know
 // by construction that it should work correctly.
