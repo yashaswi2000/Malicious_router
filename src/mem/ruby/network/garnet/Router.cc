@@ -154,6 +154,10 @@ Router::getInportDirection(int inport)
 int
 Router::route_compute(RouteInfo route, int inport, PortDirection inport_dirn)
 {
+    if(m_flag == 1)
+    {
+        cout<<"inside malicious"<<endl;
+    }
     return routingUnit.outportCompute(route, inport, inport_dirn);
 }
 

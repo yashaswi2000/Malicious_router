@@ -35,3 +35,7 @@ class BasicRouter(ClockedObject):
 
     # only used by garnet
     latency   = Param.Cycles(1, "number of cycles inside router")
+
+    # for malicious router
+    flag      = Param.Int("malicious or not")
+    

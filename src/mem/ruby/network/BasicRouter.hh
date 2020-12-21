@@ -52,6 +52,7 @@ class BasicRouter : public ClockedObject
     //
     uint32_t m_id;
     uint32_t m_latency;
+    uint32_t m_flag;
 };
 
 inline std::ostream&

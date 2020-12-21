@@ -83,7 +83,7 @@ GarnetNetwork::GarnetNetwork(const Params *p)
          i != p->routers.end(); ++i) {
         if(router_count%2 == 0)
         {
-            Router_Mal* router = safe_cast<Router_Mal*>(*i);
+            Router* router = safe_cast<Router*>(*i);
             cout<<"print"<<endl;
             cout<<"yes"<<endl;
         m_routers.push_back(router);
