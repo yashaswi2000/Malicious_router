@@ -69,8 +69,12 @@ class Mesh_XY(SimpleTopology):
         assert(num_columns * num_rows == num_routers)
 
         # Create the routers in the mesh
-        routers = [Router(router_id=i, latency = (i+1)*2, flag=1) \
-            for i in range(num_routers)]
+        routers = []
+        for i in range(num_routers):
+            if(i == 2):
+                routers.append(Router(router_id=i, latency = 20, flag=0)) 
+            else:
+                routers.append(Router(router_id=i, latency = 2, flag=0)) 
         network.routers = routers
 
         # link counter to set unique link ids
