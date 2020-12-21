@@ -77,28 +77,16 @@ GarnetNetwork::GarnetNetwork(const Params *p)
             m_vnet_type[i] = CTRL_VNET_; // carries only ctrl packets
     }
 
-    int router_count=0;
     // record the routers
     for (vector<BasicRouter*>::const_iterator i =  p->routers.begin();
          i != p->routers.end(); ++i) {
-        if(router_count%2 == 0)
-        {
-            Router* router = safe_cast<Router*>(*i);
-            cout<<"print"<<endl;
-            cout<<"yes"<<endl;
-        m_routers.push_back(router);
-
         // initialize the router's network pointers
-        router->init_net_ptr(this);
-        }
-        else{
             Router* router = safe_cast<Router*>(*i);
         m_routers.push_back(router);
 
         // initialize the router's network pointers
         router->init_net_ptr(this);
-        }
-        router_count++;
+        
     }
 
     // record the network interfaces
