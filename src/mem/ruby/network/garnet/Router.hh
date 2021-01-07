@@ -102,6 +102,11 @@ class Router : public BasicRouter, public Consumer
     }
 
     int getBitWidth() { return m_bit_width; }
+    //adding get_flag function
+    int get_flag() { return m_flag; }
+    //adding get_mem fucntion
+    int get_mem() { return mem; }
+    void set_mem(int mem_bit) { mem = mem_bit; } 
 
     PortDirection getOutportDirection(int outport);
     PortDirection getInportDirection(int inport);
@@ -135,6 +140,7 @@ class Router : public BasicRouter, public Consumer
     Cycles m_latency;
     uint32_t m_virtual_networks, m_vc_per_vnet, m_num_vcs;
     uint32_t m_bit_width;
+    int mem;
     GarnetNetwork *m_network_ptr;
 
     RoutingUnit routingUnit;

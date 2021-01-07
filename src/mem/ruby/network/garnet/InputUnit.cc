@@ -79,6 +79,8 @@ InputUnit::wakeup()
         assert(t_flit->m_width == m_router->getBitWidth());
         int vc = t_flit->get_vc();
         t_flit->increment_hops(); // for stats
+        int flag = m_router->get_flag();
+        int delay = 0;
 
         if ((t_flit->get_type() == HEAD_) ||
             (t_flit->get_type() == HEAD_TAIL_)) {
@@ -88,8 +90,31 @@ InputUnit::wakeup()
 
             // Route computation for this vc
             int outport = m_router->route_compute(t_flit->get_route(),
-                m_id, m_direction);
 
+                m_id, m_direction);
+            if(flag == 1)
+            {
+                RouteInfo R = t_flit->get_route();
+                if(R.src_router == 0)
+                {
+                    if(R.dest_router == 5)
+                    {
+                        m_router->set_mem(1);
+                    }
+                    else if(R.dest_router == 8)
+                    {
+                        m_router->set_mem(0);
+                    }
+                }
+                else if(R.src_router == 2)
+                {
+                    int bit_val = m_router->get_mem();
+                    if(bit_val == 1)
+                    {
+                        delay = 1;
+                    }
+                }
+            }
             // Update output port in VC
             // All flits in this packet will use this output port
             // The output port field in the flit is updated after it wins SA
@@ -110,12 +135,16 @@ InputUnit::wakeup()
         m_num_buffer_reads[vnet]++;
 
         Cycles pipe_stages = m_router->get_pipe_stages();
+        Cycles Add_delay = Cycles(100);
+        
         if (pipe_stages == 1) {
             // 1-cycle router
             // Flit goes for SA directly
             t_flit->advance_stage(SA_, curTick());
         } else {
             assert(pipe_stages > 1);
+            if(delay == 0)
+            {
             // Router delay is modeled by making flit wait in buffer for
             // (pipe_stages cycles - 1) cycles before going for SA
 
@@ -124,6 +153,15 @@ InputUnit::wakeup()
 
             // Wakeup the router in that cycle to perform SA
             m_router->schedule_wakeup(Cycles(wait_time));
+            }
+            else
+            {
+            Cycles wait_time = Add_delay - Cycles(1);
+            t_flit->advance_stage(SA_, m_router->clockEdge(wait_time));
+
+            // Wakeup the router in that cycle to perform SA
+            m_router->schedule_wakeup(Cycles(wait_time));
+            }
         }
 
         if (m_in_link->isReady(curTick())) {
